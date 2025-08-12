@@ -1,8 +1,10 @@
+import { auth, signOut } from "@/auth";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default function Navbar() {
+export default async function Navbar() {
+  const session = await auth();
   return (
     <header className="flex shadow-md py-4 px-4 sm:px-10 bg-indigo-400 dark:bg-slate-800 min-h-[70px] tracking-wide relative z-50 !pannel">
       <div className="flex flex-wrap items-center justify-between gap-5 w-full">
@@ -74,23 +76,41 @@ export default function Navbar() {
               Features
             </Link>
           </li>
-
-          <li>
-            <Link
-              href="/login"
-              className=" px-4 py-2 bg-slate-200 rounded-md hover:bg-indigo-500 text-black"
-            >
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/register"
-              className=" px-4 py-2 bg-slate-200 rounded-md hover:bg-indigo-500 text-black"
-            >
-              Register
-            </Link>
-          </li>
+          {!session && (
+            <>
+              <li>
+                <Link
+                  href="/login"
+                  className=" px-4 py-2 bg-slate-200 rounded-md hover:bg-indigo-500 text-black"
+                >
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/register"
+                  className=" px-4 py-2 bg-slate-200 rounded-md hover:bg-indigo-500 text-black"
+                >
+                  Register
+                </Link>
+              </li>
+            </>
+          )}
+          {session && (
+            <>
+              <li>
+                <form
+                  action={async () => {
+                    "use server";
+                    await signOut({ redirectTo: "/" });
+                  }}
+                  className=" px-4 py-2 bg-slate-200 rounded-md hover:bg-indigo-500 text-black"
+                >
+                  <button type="submit">Logout</button>
+                </form>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </header>
