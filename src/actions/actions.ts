@@ -1,12 +1,14 @@
-'use server'
+"use server"
 
-import { auth, signOut as authSignOut } from "@/auth"; // rename imported signOut
-// import { revalidatePath } from "next/cache";
+import { auth, signOut as authSignOut, signIn as authSignIn } from "@/auth";
 
-export async function signOutAction(url: string) { // renamed function
+export async function signOutAction(url: string) {
     const session = await auth();
     if (session) {
-        await authSignOut({ redirectTo: url }); // pass options to imported signOut
-        // revalidatePath(url);
+        await authSignOut({ redirectTo: url });
     }
+}
+
+export async function signInAction(url: string, provider: string) {
+    await authSignIn(provider, { redirectTo: url })
 }

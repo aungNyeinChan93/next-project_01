@@ -18,6 +18,6 @@
   }
 
   .btn {
-    @apply px-4 py-2  rounded-md;
+    @apply px-4 py-2 rounded-md border-1 border-slate-400;
   }
 }
