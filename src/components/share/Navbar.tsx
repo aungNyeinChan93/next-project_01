@@ -65,7 +65,7 @@ export default async function Navbar() {
         {/* Desktop Menu */}
         <ul className="hidden lg:flex gap-6  justify-center items-center">
           <li>
-            <Link href="/dashboard" className="hover:text-blue-700">
+            <Link href="/dashboard" className={`hover:text-blue-700 `}>
               Dashboard
             </Link>
           </li>
