@@ -1,12 +1,15 @@
 import { auth, signOut } from "@/auth";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
+import Avator from "@/components/share/Avator";
+import Loader from "./Loader";
 
 export default async function Navbar() {
   const session = await auth();
+
   return (
-    <header className="flex shadow-md py-4 px-4 sm:px-10 bg-indigo-400 dark:bg-slate-800 min-h-[70px] tracking-wide relative z-50 !pannel">
+    <header className="flex shadow-md py-5 px-4 sm:px-10 bg-indigo-400 dark:bg-slate-800 min-h-[70px] tracking-wide relative z-50 !pannel">
       <div className="flex flex-wrap items-center justify-between gap-5 w-full">
         <Link href="/" className="max-sm:hidden">
           <Image
@@ -60,7 +63,7 @@ export default async function Navbar() {
         </details>
 
         {/* Desktop Menu */}
-        <ul className="hidden lg:flex gap-4 ">
+        <ul className="hidden lg:flex gap-6  justify-center items-center">
           <li>
             <Link href="/dashboard" className="hover:text-blue-700">
               Dashboard
@@ -76,6 +79,7 @@ export default async function Navbar() {
               Features
             </Link>
           </li>
+
           {!session && (
             <>
               <li>
@@ -96,8 +100,16 @@ export default async function Navbar() {
               </li>
             </>
           )}
+
           {session && (
             <>
+              <li>
+                {session?.user && (
+                  <Suspense fallback={<Loader />}>
+                    <Avator session={session} />
+                  </Suspense>
+                )}
+              </li>
               <li>
                 <form
                   action={async () => {

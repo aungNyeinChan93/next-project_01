@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
         hostname: "cdn.dummyjson.com",
         pathname: "**", // allow all paths
       },
+      {
+        hostname: 'avatars.githubusercontent.com'
+      }
     ],
   },
 };
